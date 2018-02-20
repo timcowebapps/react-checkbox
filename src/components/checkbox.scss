@@ -1,0 +1,84 @@
+
+
+%input-checked {
+	.#{$checkbox-name} {
+		@include element('inner') {
+			@include element('indicator') {
+				display: block;
+			}
+		}
+	}
+}
+
+%input-disabled {
+
+}
+
+.#{$checkbox-name} {
+	@include element('inner') {
+		margin-right: 12px;
+		padding: 0;
+		position: relative;
+		/* #region Размер элемента */
+		width: $checkbox-width;
+		height: $checkbox-height;
+		/* #endregion */
+		background: $checkbox-background;
+		border: 1px solid $checkbox-borderColor;
+		@include border-radius(0);
+		display: inline-block;
+		vertical-align: top;
+	
+		@include element('input') {
+			opacity: 0;
+			display: block;
+			/* #region Абсолютное позиционирование */
+			position: absolute;
+			top: 0;
+			left: 0;
+			/* #endregion */
+			/* #region Размер элемента */
+			width: $checkbox-width;
+			height: $checkbox-height;
+			/* #endregion */
+			margin: 0;
+			padding: 0;
+			z-index: 1;
+		}
+
+		@include element('indicator') {
+			/* #region Абсолютное позиционирование */
+			position: absolute;
+			left: calc(50% - #{$checkbox-indicator-width} / 2);
+			top: calc(50% - #{$checkbox-indicator-height} / 2);
+			/* #endregion */
+			/* #region Размер элемента */
+			width: $checkbox-indicator-width;
+			height: $checkbox-indicator-height;
+			/* #endregion */
+			background: $checkbox-indicator-background;
+			@include border-radius(0);
+			display: none;
+
+			&:after {
+				content: '';
+				position: absolute;
+				top: calc(50% - ((#{$checkbox-indicator-width} / 2) - (#{$checkbox-indicator-icon-width} - 1px)));
+				left: calc(50% - ((#{$checkbox-indicator-height} / 2) - (#{$checkbox-indicator-icon-height} - 1px)));
+				width: $checkbox-indicator-icon-width;
+				height: $checkbox-indicator-icon-height;
+				border: solid #fff;
+				border-width: 0 2px 2px 0;
+				transform: rotate(45deg);
+			}
+		}
+	}
+
+	@include modifier('checked') {
+		@extend %input-checked;
+	}
+
+	@include modifier('disabled') {
+		//@extend %input-disabled;
+	}
+}
